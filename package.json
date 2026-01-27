@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "End-to-end tests with Playwright",
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test --project=chromium --headed --ui",
+    "test:setup": "playwright test tests/setup/manual-login.spec.ts --project=setup --headed",
     "test:ui": "playwright test --ui",
+    "test:ui-session": "playwright test --ui --workers=1 --project=session",
+    "test:session": "playwright test --headed --workers=1 --project=session",
+    "test:login-first": "playwright test tests/login-session.spec.ts --headed --workers=1",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "test:auto": "playwright test --grep-invert manual"
   },
   "keywords": [],
   "author": "",
