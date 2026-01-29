@@ -21,6 +21,7 @@ test.describe.serial('Overseas Single Transfer', () => {
 
 
   test('Make an Overseas Transfer', async () => {
+    await page.pause();
     //TODO: Add validation
     const overseasSingleTransferPage = new OverseasSingleTransferPage(page);
 
@@ -64,6 +65,8 @@ test.describe.serial('Overseas Single Transfer', () => {
     // Move form value appending to helper file
     await appendValueFormStep1(page);
 
+    await page.pause();
+
     const confirmButtonStep1 = page.locator('#S01_lbl_btn_211');
     await confirmButtonStep1.click();
 
@@ -87,6 +90,7 @@ test.describe.serial('Overseas Single Transfer', () => {
     console.log('Transfer amount: ', OverseasTransferFormValues.transferAmount);
     console.log('Transaction successful');
     expect(transactionCompleteLogo).toBeVisible();
+    await page.pause();
 
   });
 
@@ -143,6 +147,8 @@ test.describe.serial('Overseas Single Transfer', () => {
     await periodTodayOption.click();
 
     console.log('Clicking inquiry button...');
+
+    await page.pause();
 
     const inquiryButton = page.locator('#S01_lbl_btn_007');
     await inquiryButton.click();
@@ -204,10 +210,12 @@ test.describe.serial('Overseas Single Transfer', () => {
       // After checking all tds in the row:
       if (matchedName && matchedAccount && matchedAmount) {
         foundBeneficiary = true;
-        console.log('Found beneficiary with name: ', beneficiaryName, ' and account: ', beneficiaryAccount, ' and amount: ', OverseasTransferFormValues.transferAmount, ' on the row with index: ', rowIndex);
+        console.log('Found beneficiary with name: ', beneficiaryName, ' and account: ', beneficiaryAccount, ' and amount: ', OverseasTransferFormValues.transferAmount, ' on the row number: ', rowIndex + 1);
         break;
       }
     }
+
+    await page.pause();
 
     expect(foundBeneficiary).toBeTruthy();
 
