@@ -9,22 +9,16 @@ import { Page } from '@playwright/test';
  * @throws Error if not logged in
  */
 export async function verifyLoggedIn(page: Page, timeout: number = 10000): Promise<void> {
-  try {
-    const corpLayout = page.locator('.corp');
-    await corpLayout.waitFor({ state: 'visible', timeout });
+  const corpLayout = page.locator('.corp');
+  await corpLayout.waitFor({ state: 'visible', timeout });
 
-    // Double check it's actually visible
-    const isVisible = await corpLayout.first().isVisible();
-    if (!isVisible) {
-      throw new Error('Layout with class "corp" not visible');
-    }
-  } catch (error) {
-    throw new Error(
-      'Not logged in: Layout with class "corp" not found. ' +
-      'This means you are still on the home/login page. ' +
-      'Please run "pnpm test:setup" to login and save authentication state first.'
-    );
+  // Double check it's actually visible
+  const isVisible = await corpLayout.first().isVisible();
+  if (!isVisible) {
+    throw new Error('Layout with class "corp" not visible');
   }
+
+  console.log('Logged in successfully');
 }
 
 export async function login(page: Page): Promise<void> {
@@ -65,9 +59,9 @@ export async function login(page: Page): Promise<void> {
   //STEP 2: Enter security question answer
 
   // After manual login, wait for verification step
-  console.log('Waiting for verification step to complete...');
   await page.waitForSelector('#btn_M1150M00_Next', { state: 'visible' });
   await page.waitForSelector('#ipt_answer', { state: 'visible' });
+  console.log('Login step 2: Enter security question answer');
 
   // Enter security question answer
   const answerInput = page.locator('#ipt_answer');
@@ -82,7 +76,6 @@ export async function login(page: Page): Promise<void> {
 
 
   // Wait for navigation after clicking confirm button
-  console.log('Waiting for navigation after confirm button click...');
   await page.waitForLoadState('networkidle');
 
   // Check if OTP_PIN field is visible (for OTP step), interact with keypad if needed
@@ -98,10 +91,6 @@ export async function login(page: Page): Promise<void> {
     await page.waitForLoadState('networkidle');
   }
 
-
-  // Verify successful login by checking for layout with class 'corp'
-  console.log('Verifying successful login - checking for layout with class "corp"...');
   await verifyLoggedIn(page);
-
 
 }

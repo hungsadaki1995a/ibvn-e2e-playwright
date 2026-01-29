@@ -10,7 +10,7 @@
     "test:session": "playwright test --headed --workers=1 --project=session",
     "test:login-first": "playwright test tests/login-session.spec.ts --headed --workers=1",
     "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
+    "test:debug": "playwright test --project=chromium --debug",
     "test:report": "playwright show-report",
     "test:auto": "playwright test --grep-invert manual"
   },
