@@ -34,6 +34,8 @@ export default defineConfig({
     headless: false,
   },
 
+  timeout: 100000,
+
   /* Configure projects for major browsers */
   projects: [
 

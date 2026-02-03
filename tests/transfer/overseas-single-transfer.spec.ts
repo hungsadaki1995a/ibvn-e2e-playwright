@@ -19,15 +19,35 @@ test.describe.serial('Overseas Single Transfer', () => {
     await login(page);
   });
 
-
-  test('Make an Overseas Transfer', async () => {
-    await page.pause();
-    //TODO: Add validation
+  test('Submit the empty form', async () => {
+    console.log('Opening Overseas Single Transfer Page...');
     const overseasSingleTransferPage = new OverseasSingleTransferPage(page);
-
     await overseasSingleTransferPage.openOverseasSingleTransferPage();
 
-    console.log('Opening Overseas Single Transfer Page...');
+    console.log('Click the Confirm button with empty form');
+    const confirmButtonStep1 = page.locator('#S01_lbl_btn_211');
+    await confirmButtonStep1.click();
+
+    // Wait for the alert with id "wf_alert" to be visible, then assert it's shown
+    const wfAlert = page.locator('#wf_alert');
+    await expect(wfAlert).toBeVisible();
+
+    console.log('The error message alert is shown');
+
+    await page.pause();
+
+    const closeButton = page.locator('#btn_left');
+    await closeButton.click();
+
+  });
+
+
+  test('Make an Overseas Transfer', async () => {
+    // await page.pause();
+    // //TODO: Add validation
+    // const overseasSingleTransferPage = new OverseasSingleTransferPage(page);
+
+    // await overseasSingleTransferPage.openOverseasSingleTransferPage();
 
     const debitAccountLabel = page.locator('#S01_jiAcnoList_label');
     // Wait until the label has a non-empty value
