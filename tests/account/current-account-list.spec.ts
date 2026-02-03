@@ -42,7 +42,7 @@ test.describe.serial("View current account list page", () => {
     await login(page);
   });
 
-  test("View account list", async () => {
+  test("Check number of demand account and saving account", async () => {
     const accountListPage = new AccountListPage(page);
 
     //TODO: Call API get account list and check with data displayed on the page
@@ -76,13 +76,19 @@ test.describe.serial("View current account list page", () => {
     // Verify demand account count matches
     expect(displayedCountDebit).toBe(demandCountFromAPI);
     console.log(
-      `✓ Demand account count matches: ${displayedCountDebit} === ${demandCountFromAPI}`,
+      `✓ Demand account count from server: ${demandCountFromAPI}`,
+    );
+    console.log(
+      `✓ Demand account count displayed on the UI: ${displayedCountDebit}`,
     );
 
     // Verify saving account count matches
     expect(displayedCountSaving).toBe(savingCountFromAPI);
     console.log(
-      `✓ Saving account count matches: ${displayedCountSaving} === ${savingCountFromAPI}`,
+      `✓ Saving account count from server: ${savingCountFromAPI}`,
+    );
+    console.log(
+      `✓ Saving account count displayed on the UI: ${displayedCountSaving}`,
     );
   });
   // const pageTitle = await page.locator('#pageTitle');
