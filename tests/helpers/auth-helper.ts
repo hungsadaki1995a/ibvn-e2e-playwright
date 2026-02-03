@@ -36,6 +36,7 @@ export async function login(page: Page): Promise<void> {
   //STEP 1: Enter user ID & PASSWORD
 
   await page.waitForSelector('#ipt_userID', { state: 'visible' });
+  await page.waitForTimeout(1000);
 
   // Enter user ID automatically
   const userIdInput = page.locator('#ipt_userID');
@@ -55,6 +56,8 @@ export async function login(page: Page): Promise<void> {
 
   const loginStep1Button = page.locator('a.btnLv1');
   await loginStep1Button.click();
+
+  await page.waitForTimeout(1000);
 
   //STEP 2: Enter security question answer
 
@@ -78,10 +81,12 @@ export async function login(page: Page): Promise<void> {
   // Wait for navigation after clicking confirm button
   await page.waitForLoadState('networkidle');
 
+  await page.waitForTimeout(1000);
+
   // Check if OTP_PIN field is visible (for OTP step), interact with keypad if needed
   //STEP 3: Enter OTP_PIN
   const otpPinInput = page.locator('#OTP_PIN');
-  if (await otpPinInput.isVisible({ timeout: 1500 }).catch(() => false)) {
+  if (await otpPinInput.isVisible({ timeout: 4000 }).catch(() => false)) {
     console.log('OTP_PIN detected, handling OTP keypad...');
     await page.waitForTimeout(500);
     await otpPinInput.click();

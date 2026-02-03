@@ -4,10 +4,14 @@ export class OverseasSingleTransferPage {
   constructor(private page: Page) { }
 
   async openOverseasSingleTransferPage() {
+    await this.page.waitForTimeout(1000);
+
     console.log('Clicking parent dropdown menu...');
     const parentDropdown = this.page.locator('[id="24000000000"]');
     await parentDropdown.waitFor({ state: 'visible' });
     await parentDropdown.click();
+
+    await this.page.waitForTimeout(1000);
 
 
     // Click the child menu item that includes text "Overseas Single Transfer"
